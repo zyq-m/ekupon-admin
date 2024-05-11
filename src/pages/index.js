@@ -6,6 +6,7 @@ import StudentData from "./user-data/student";
 import TopUpWallet from "./topUpWallet";
 import TransactionAllCafe from "./transaction/allCafe";
 import SpendLimit from "./spendLimit";
+import Login from "./login";
 
 export {
   Dashboard,
@@ -16,4 +17,5 @@ export {
   TopUpWallet,
   TransactionAllCafe,
   SpendLimit,
+  Login,
 };

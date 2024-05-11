@@ -37,6 +37,10 @@ const router = createBrowserRouter([
     path: "/spend-limit",
     element: <Page.SpendLimit />,
   },
+  {
+    path: "/login",
+    element: <Page.Login />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

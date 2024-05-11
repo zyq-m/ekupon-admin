@@ -11,12 +11,12 @@ const nav = [
     id: 1,
     name: "Dashboard",
     link: "/",
-    icon: () => <HomeRoundedIcon />,
+    icon: () => <HomeRoundedIcon fontSize="small" />,
   },
   {
     id: 2,
     name: "Registration",
-    icon: () => <PersonAddAltRoundedIcon />,
+    icon: () => <PersonAddAltRoundedIcon fontSize="small" />,
     child: [
       {
         id: 1.2,
@@ -33,7 +33,7 @@ const nav = [
   {
     id: 2,
     name: "user data",
-    icon: () => <PeopleAltRoundedIcon />,
+    icon: () => <PeopleAltRoundedIcon fontSize="small" />,
     child: [
       {
         id: 1.2,
@@ -51,24 +51,24 @@ const nav = [
     id: 3,
     name: "Top up wallet",
     link: "/top-up-wallet",
-    icon: () => <AddCardRoundedIcon />,
+    icon: () => <AddCardRoundedIcon fontSize="small" />,
   },
   {
     id: 4,
     name: "Transaction",
     link: "/transaction/cafe/all",
-    icon: () => <ChecklistRoundedIcon />,
+    icon: () => <ChecklistRoundedIcon fontSize="small" />,
   },
   {
     id: 5,
     name: "spend limit",
     link: "/spend-limit",
-    icon: () => <PaidRoundedIcon />,
+    icon: () => <PaidRoundedIcon fontSize="small" />,
   },
 ];
 
 export default function Sidebar() {
-  const activeLink = "flex gap-2 px-3 py-2 rounded-lg capitalize";
+  const activeLink = "flex gap-2 items-center px-3 py-2 rounded-lg capitalize";
 
   return (
     <>
