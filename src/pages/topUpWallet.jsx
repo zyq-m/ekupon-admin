@@ -29,7 +29,7 @@ export default function TopUpWallet() {
   ];
 
   return (
-    <Layout title="Student">
+    <Layout title="Top up wallet">
       <div className="overflow-x-auto">
         <div className="flex justify-end">
           <select className="select select-bordered select-sm">

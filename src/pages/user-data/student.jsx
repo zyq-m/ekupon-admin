@@ -29,7 +29,7 @@ export default function StudentData() {
   ];
 
   return (
-    <Layout title="Student">
+    <Layout title="Student data">
       <div className="overflow-x-auto">
         <div className="flex justify-end">
           <select className="select select-bordered select-sm">

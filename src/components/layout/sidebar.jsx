@@ -1,14 +1,22 @@
 import { NavLink } from "react-router-dom";
+import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
+import PersonAddAltRoundedIcon from "@mui/icons-material/PersonAddAltRounded";
+import PeopleAltRoundedIcon from "@mui/icons-material/PeopleAltRounded";
+import AddCardRoundedIcon from "@mui/icons-material/AddCardRounded";
+import ChecklistRoundedIcon from "@mui/icons-material/ChecklistRounded";
+import PaidRoundedIcon from "@mui/icons-material/PaidRounded";
 
 const nav = [
   {
     id: 1,
     name: "Dashboard",
     link: "/",
+    icon: () => <HomeRoundedIcon />,
   },
   {
     id: 2,
     name: "Registration",
+    icon: () => <PersonAddAltRoundedIcon />,
     child: [
       {
         id: 1.2,
@@ -25,6 +33,7 @@ const nav = [
   {
     id: 2,
     name: "user data",
+    icon: () => <PeopleAltRoundedIcon />,
     child: [
       {
         id: 1.2,
@@ -42,26 +51,32 @@ const nav = [
     id: 3,
     name: "Top up wallet",
     link: "/top-up-wallet",
+    icon: () => <AddCardRoundedIcon />,
   },
   {
     id: 4,
     name: "Transaction",
     link: "/transaction/cafe/all",
+    icon: () => <ChecklistRoundedIcon />,
   },
   {
     id: 5,
     name: "spend limit",
     link: "/spend-limit",
+    icon: () => <PaidRoundedIcon />,
   },
 ];
 
 export default function Sidebar() {
-  const activeLink = "block px-3 py-2 rounded-md w-fit capitalize";
+  const activeLink = "flex gap-2 px-3 py-2 rounded-lg capitalize";
 
   return (
     <>
-      <nav className="w-[169px] h-screen">
-        <ul className="text-sm">
+      <nav
+        className="flex flex-col justify-between w-[169px]"
+        style={{ minHeight: "calc(100vh - 40px)" }}
+      >
+        <ul>
           {nav.map((d) => {
             return (
               <>
@@ -70,25 +85,33 @@ export default function Sidebar() {
                     <NavLink
                       to={d.link}
                       className={({ isActive }) =>
-                        isActive ? `${activeLink} bg-gray-100` : activeLink
+                        isActive
+                          ? `${activeLink} bg-stone-700 text-white`
+                          : `${activeLink} hover:bg-gray-100`
                       }
                     >
+                      {d.icon()}
                       {d.name}
                     </NavLink>
                   ) : (
-                    <div className={`${activeLink}`}>{d.name}</div>
+                    <div className={`${activeLink}`}>
+                      {d.icon()}
+                      {d.name}
+                    </div>
                   )}
                   {d.child && (
                     <>
-                      <ul className="ml-3 gap-1 hidden hover:grid">
+                      <ul className="ml-3">
                         {d.child?.map((e) => {
                           return (
                             <>
-                              <li key={e.id} className="capitalize">
+                              <li key={e.id} className="ml-5 capitalize">
                                 <NavLink
                                   to={e.link}
                                   className={({ isActive }) =>
-                                    isActive ? "" : ""
+                                    isActive
+                                      ? `${activeLink} bg-stone-700 text-white`
+                                      : `${activeLink} hover:bg-gray-100`
                                   }
                                 >
                                   {e.name}
@@ -105,7 +128,6 @@ export default function Sidebar() {
             );
           })}
         </ul>
-        <button className="btn btn-sm btn-error">Logout</button>
       </nav>
     </>
   );

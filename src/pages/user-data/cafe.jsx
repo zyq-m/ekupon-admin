@@ -27,7 +27,7 @@ export default function CafeData() {
   ];
 
   return (
-    <Layout title="Cafe">
+    <Layout title="Cafe data">
       <div className="overflow-x-auto">
         <table className="table">
           <thead>
