@@ -1,50 +1,26 @@
-import { useId } from "react";
-import { Layout } from "../../components";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Layout, Tablefilter } from "../../components";
 
-import { fundType } from "../registration/student";
+import { api } from "../../services/axios";
 
 export default function StudentData() {
-  const student = [
-    {
-      id: useId(),
-      name: "Test",
-      matricNo: "012345",
-      status: true,
-      balance: "400",
-    },
-    {
-      id: useId(),
-      name: "Test",
-      matricNo: "012345",
-      status: true,
-      balance: "400",
-    },
-    {
-      id: useId(),
-      name: "Test",
-      matricNo: "012345",
-      status: true,
-      balance: "400",
-    },
-  ];
+  const [student, setStudent] = useState([]);
+  const [fund, setFund] = useState("");
+
+  useEffect(() => {
+    api
+      .get("/admin/student", { params: { fundType: fund } })
+      .then((res) => setStudent(res.data.student))
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [fund]);
 
   return (
     <Layout title="Student data">
+      <Tablefilter fundType={true} setSelect={(e) => setFund(e)} />
       <div className="overflow-x-auto">
-        <div className="flex justify-end">
-          <select className="select select-bordered select-sm">
-            <option>Fund type</option>
-            {fundType.map((d, i) => {
-              return (
-                <>
-                  <option key={i} value={d.value}>
-                    {d.title}
-                  </option>
-                </>
-              );
-            })}
-          </select>
-        </div>
         <table className="table">
           <thead>
             <tr>
@@ -59,12 +35,20 @@ export default function StudentData() {
             {student.map((d, i) => {
               return (
                 <>
-                  <tr className="hover" key={i}>
+                  <tr className="hover" key={d.matricNo}>
                     <th>{i + 1}</th>
-                    <td className="capitalize">{d.name}</td>
+                    <td className="capitalize">{d.user.profile.name}</td>
                     <td>{d.matricNo}</td>
-                    <td>{d.balance}</td>
-                    <td>{d.status ? "active" : "suspended"}</td>
+                    <td>{d.coupon.total}</td>
+                    <td>{d.user.active ? "active" : "suspended"}</td>
+                    <td>
+                      <Link
+                        to={`transaction/${d.matricNo}`}
+                        className="btn btn-ghost btn-xs"
+                      >
+                        transactions
+                      </Link>
+                    </td>
                   </tr>
                 </>
               );

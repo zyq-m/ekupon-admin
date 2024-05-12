@@ -1,30 +1,22 @@
-import { useId } from "react";
+import { useState, useId, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Layout } from "../../components";
 
+import { api } from "../../services/axios";
+
 export default function CafeData() {
-  const cafe = [
-    {
-      id: useId(),
-      name: "Test",
-      cafeName: "Test",
-      status: true,
-      accountNo: "00000",
-    },
-    {
-      id: useId(),
-      name: "Test",
-      cafeName: "Test",
-      status: true,
-      accountNo: "00000",
-    },
-    {
-      id: useId(),
-      name: "Test",
-      cafeName: "Test",
-      status: true,
-      accountNo: "00000",
-    },
-  ];
+  const [cafe, setCafe] = useState([]);
+
+  useEffect(() => {
+    api
+      .get("/admin/cafe")
+      .then((res) => {
+        setCafe(res.data.cafe);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
 
   return (
     <Layout title="Cafe data">
@@ -33,22 +25,32 @@ export default function CafeData() {
           <thead>
             <tr>
               <th></th>
-              <th>Name</th>
               <th>Cafe Name</th>
+              <th>Owner</th>
               <th>Account No.</th>
+              <th>Bank Name</th>
               <th>Status</th>
             </tr>
           </thead>
           <tbody>
-            {cafe.map((d, i) => {
+            {cafe?.map((d, i) => {
               return (
                 <>
-                  <tr className="hover">
+                  <tr className="hover" key={d.id}>
                     <th>{i + 1}</th>
                     <td>{d.name}</td>
-                    <td>{d.cafeName}</td>
-                    <td>{d.accountNo}</td>
-                    <td>{d.status ? "active" : "suspended"}</td>
+                    <td>{d.user.profile.name}</td>
+                    <td>{d.accountNo || "N/A"}</td>
+                    <td>{d.bank || "N/A"}</td>
+                    <td>{d.user.active ? "active" : "suspended"}</td>
+                    <td>
+                      <Link
+                        to={`transaction/${d.id}`}
+                        className="btn btn-ghost btn-xs"
+                      >
+                        transactions
+                      </Link>
+                    </td>
                   </tr>
                 </>
               );

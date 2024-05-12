@@ -1,74 +1,37 @@
-import { useId } from "react";
-import { Layout } from "../../components";
+import { useEffect, useState } from "react";
+import { Layout, Tablefilter } from "../../components";
 
-import { fundType } from "../registration/student";
+import { api } from "../../services/axios";
 
 export default function TransactionAllCafe() {
-  const cafe = [
-    {
-      id: useId(),
-      name: "Test",
-      cafeName: "Test",
-      status: true,
-      accountNo: "00000",
-      bank: "Rakyat",
-      transaction: 10,
-      total: 50,
-    },
-    {
-      id: useId(),
-      name: "Test",
-      cafeName: "Test",
-      status: true,
-      accountNo: "00000",
-      bank: "Rakyat",
-      transaction: 10,
-      total: 50,
-    },
-    {
-      id: useId(),
-      name: "Test",
-      cafeName: "Test",
-      status: true,
-      accountNo: "00000",
-      bank: "Rakyat",
-      transaction: 10,
-      total: 50,
-    },
-  ];
+  const [select, setSelect] = useState("");
+  const [transaction, setTransaction] = useState([]);
+  const [byDate, setByDate] = useState({});
+
+  useEffect(() => {
+    api
+      .get("/admin/report/transaction", {
+        params: {
+          fundType: select,
+          from: byDate?.from,
+          to: byDate?.to,
+        },
+      })
+      .then((res) => {
+        setTransaction(res.data.transaction);
+      });
+  }, [byDate?.from, byDate?.to, select]);
 
   return (
-    <Layout title="Cafe Transaction Summary">
+    <Layout title="Cafe Transaction Report">
+      <Tablefilter
+        fundType={true}
+        date={true}
+        print={true}
+        setSelect={(e) => setSelect(e)}
+        setDate={(e) => setByDate(e)}
+      />
       <div className="overflow-x-auto">
-        <div className="flex justify-between gap-2">
-          <div>
-            <select className="select select-bordered select-sm">
-              <option>Fund type</option>
-              {fundType.map((d, i) => {
-                return (
-                  <>
-                    <option key={i} value={d.value}>
-                      {d.title}
-                    </option>
-                  </>
-                );
-              })}
-            </select>
-          </div>
-          <div className="flex gap-2">
-            <label className="input input-bordered input-sm flex items-center gap-2">
-              From
-              <input type="date" className="grow" />
-            </label>
-            <label className="input input-bordered input-sm flex items-center gap-2">
-              To
-              <input type="date" className="grow" />
-            </label>
-            <button className="btn btn-accent btn-sm">Find</button>
-            <button className="btn btn-accent btn-sm">Print</button>
-          </div>
-        </div>
-
         <table className="table">
           <thead>
             <tr>
@@ -77,12 +40,12 @@ export default function TransactionAllCafe() {
               <th>Cafe Name</th>
               <th>Account No.</th>
               <th>Bank</th>
-              <th>Transaction</th>
+              <th>Total Transaction</th>
               <th>Total(RM)</th>
             </tr>
           </thead>
           <tbody>
-            {cafe.map((d, i) => {
+            {transaction?.map((d, i) => {
               return (
                 <>
                   <tr className="hover" key={d.id}>
@@ -90,9 +53,9 @@ export default function TransactionAllCafe() {
                     <td>{d.name}</td>
                     <td>{d.cafeName}</td>
                     <td>{d.accountNo}</td>
-                    <td>{d.bank}</td>
-                    <td>{d.transaction}</td>
-                    <td>{d.total}</td>
+                    <td>{d.bank || "N/A"}</td>
+                    <td>{d.totalTransaction}</td>
+                    <td>{d.totalAmount}</td>
                   </tr>
                 </>
               );

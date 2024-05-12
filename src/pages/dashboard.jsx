@@ -1,39 +1,40 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Layout } from "../components";
 
+import { socket } from "../services/io";
+
 export default function Dashboard() {
-  const [summary, setSummary] = useState([
-    {
-      title: "total student",
-      desc: "students",
-      value: 0,
-    },
-    {
-      title: "total cafe",
-      desc: "cafes",
-      value: 0,
-    },
-    {
-      title: "total transaction",
-      desc: "transactions",
-      value: 0,
-    },
-  ]);
+  const [summary, setSummary] = useState({
+    student: 0,
+    cafe: 0,
+    coupon: 0,
+  });
+
+  useEffect(() => {
+    socket.emit("admin:get-overall");
+    socket.on("admin:get-overall", (data) => {
+      setSummary(data);
+    });
+  }, []);
 
   return (
     <Layout title="Dashboard">
       <div className="stats shadow">
-        {summary.map((d, i) => {
-          return (
-            <>
-              <div key={i} className="stat">
-                <div className="stat-title capitalize">{d.title}</div>
-                <div className="stat-value">{d.value}</div>
-                <div className="stat-desc">{d.desc}</div>
-              </div>
-            </>
-          );
-        })}
+        <div className="stat">
+          <div className="stat-title capitalize">Total student</div>
+          <div className="stat-value">{summary.student}</div>
+          <div className="stat-desc">students</div>
+        </div>
+        <div className="stat">
+          <div className="stat-title capitalize">Total cafe</div>
+          <div className="stat-value">{summary.cafe}</div>
+          <div className="stat-desc">cafes</div>
+        </div>
+        <div className="stat">
+          <div className="stat-title capitalize">Total transaction</div>
+          <div className="stat-value">{summary.coupon}</div>
+          <div className="stat-desc">transactions</div>
+        </div>
       </div>
     </Layout>
   );

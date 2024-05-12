@@ -1,56 +1,102 @@
-import { useId } from "react";
-import { Layout } from "../components";
+import { useEffect, useState } from "react";
+import { Layout, Tablefilter, Modal } from "../components";
 
-import { fundType } from "./registration/student";
+import { api } from "../services/axios";
+import { useModal } from "../hooks";
 
 export default function TopUpWallet() {
-  const student = [
-    {
-      id: useId(),
-      name: "Test",
-      matricNo: "012345",
-      status: true,
-      balance: "400",
-    },
-    {
-      id: useId(),
-      name: "Test",
-      matricNo: "012345",
-      status: true,
-      balance: "400",
-    },
-    {
-      id: useId(),
-      name: "Test",
-      matricNo: "012345",
-      status: true,
-      balance: "400",
-    },
-  ];
+  const [student, setStudent] = useState([]);
+  const [select, setSelect] = useState();
+  const [checkAll, setCheckAll] = useState(false);
+  const [amount, setAmount] = useState("");
+  const { error, showModal } = useModal();
+
+  function onAllChecked(e) {
+    const { checked } = e.target;
+
+    setCheckAll(checked);
+    setStudent((prev) => prev.map((d) => ({ ...d, isChecked: checked })));
+  }
+
+  function onCheck(e) {
+    const { id, checked } = e.target;
+    setStudent((prev) => {
+      return prev.map((d) => {
+        if (d.matricNo == id) {
+          setCheckAll(false);
+          return { ...d, isChecked: checked };
+        }
+
+        return { ...d };
+      });
+    });
+  }
+
+  async function onTopup() {
+    try {
+      if (!select) {
+        showModal("Please select fund type");
+        return;
+      }
+      if (checkAll) {
+        await api.put("/admin/student/coupon", {
+          role: select,
+          amount: amount,
+        });
+        setCheckAll(false);
+      } else {
+        await Promise.all(
+          student
+            .filter((d) => d.isChecked === true)
+            .map(async (d) => {
+              await api.put("/admin/student/coupon", {
+                role: select,
+                amount: amount,
+                matricNo: d.matricNo,
+              });
+            })
+        );
+      }
+
+      setAmount("");
+      fetchData();
+    } catch (error) {
+      showModal(error.response.data.message);
+    }
+  }
+
+  function fetchData() {
+    api
+      .get("/admin/student", { params: { fundType: select } })
+      .then((res) => {
+        setStudent(() =>
+          res.data.student.map((d) => ({ ...d, isChecked: false }))
+        );
+      })
+      .catch((err) => {
+        showModal(err.response.data.message);
+      });
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, [select]);
 
   return (
     <Layout title="Top up wallet">
+      <Tablefilter fundType={true} setSelect={(e) => setSelect(e)} />
       <div className="overflow-x-auto">
-        <div className="flex justify-end">
-          <select className="select select-bordered select-sm">
-            <option>Fund type</option>
-            {fundType.map((d, i) => {
-              return (
-                <>
-                  <option key={i} value={d.value}>
-                    {d.title}
-                  </option>
-                </>
-              );
-            })}
-          </select>
-        </div>
-        <table className="table">
+        <table className="table mb-4">
           <thead>
             <tr>
               <th>
                 <label>
-                  <input type="checkbox" className="checkbox" />
+                  <input
+                    type="checkbox"
+                    className="checkbox"
+                    onChange={onAllChecked}
+                    checked={checkAll}
+                  />
                 </label>
               </th>
               <th>Name</th>
@@ -60,19 +106,25 @@ export default function TopUpWallet() {
             </tr>
           </thead>
           <tbody>
-            {student.map((d, i) => {
+            {student?.map((d) => {
               return (
                 <>
-                  <tr className="hover" key={i}>
+                  <tr className="hover" key={d.matricNo}>
                     <th>
                       <label>
-                        <input type="checkbox" className="checkbox" />
+                        <input
+                          id={d.matricNo}
+                          type="checkbox"
+                          className="checkbox"
+                          checked={d.isChecked}
+                          onChange={onCheck}
+                        />
                       </label>
                     </th>
-                    <td className="capitalize">{d.name}</td>
+                    <td className="capitalize">{d.user.profile.name}</td>
                     <td>{d.matricNo}</td>
-                    <td>{d.balance}</td>
-                    <td>{d.status ? "active" : "suspended"}</td>
+                    <td>{d.coupon.total}</td>
+                    <td>{d.user.active ? "active" : "suspended"}</td>
                   </tr>
                 </>
               );
@@ -85,10 +137,15 @@ export default function TopUpWallet() {
             type="number"
             placeholder="amount"
             className="input input-bordered input-sm"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
           />
-          <button className="btn btn-accent btn-sm">Top up</button>
+          <button className="btn btn-accent btn-sm" onClick={onTopup}>
+            Top up
+          </button>
         </div>
       </div>
+      <Modal error={error} />
     </Layout>
   );
 }

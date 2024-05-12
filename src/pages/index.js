@@ -7,6 +7,8 @@ import TopUpWallet from "./topUpWallet";
 import TransactionAllCafe from "./transaction/allCafe";
 import SpendLimit from "./spendLimit";
 import Login from "./login";
+import CafeTransaction from "./user-data/transaction/cafe";
+import StudentTransaction from "./user-data/transaction/student";
 
 export {
   Dashboard,
@@ -18,4 +20,6 @@ export {
   TransactionAllCafe,
   SpendLimit,
   Login,
+  CafeTransaction,
+  StudentTransaction,
 };

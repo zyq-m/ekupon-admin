@@ -49,7 +49,7 @@ const nav = [
   },
   {
     id: 3,
-    name: "Top up wallet",
+    name: "Top up",
     link: "/top-up-wallet",
     icon: () => <AddCardRoundedIcon fontSize="small" />,
   },

@@ -11,7 +11,7 @@ export const fundType = [
   },
   {
     title: "Paynet",
-    value: "PAYNET-HEPA",
+    value: "PAYNET",
   },
 ];
 

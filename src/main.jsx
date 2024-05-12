@@ -22,8 +22,16 @@ const router = createBrowserRouter([
     element: <Page.CafeData />,
   },
   {
+    path: "/data/cafe/transaction/:id",
+    element: <Page.CafeTransaction />,
+  },
+  {
     path: "/data/student",
     element: <Page.StudentData />,
+  },
+  {
+    path: "/data/student/transaction/:id",
+    element: <Page.StudentTransaction />,
   },
   {
     path: "/top-up-wallet",
