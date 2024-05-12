@@ -3,16 +3,19 @@ import { Modal, TextInput } from "../components";
 
 import { login } from "../api/auth";
 import { useModal } from "../hooks";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [credential, setCredential] = useState({});
   const { error, showModal } = useModal();
+  const navigate = useNavigate();
 
   async function onLogin(e) {
     e.preventDefault();
 
     try {
       await login(credential.email, credential.password);
+      navigate("/");
     } catch (error) {
       showModal(error.response.data);
     }

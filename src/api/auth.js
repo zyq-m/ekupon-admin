@@ -19,8 +19,14 @@ export const renewToken = async () => {
 };
 
 export const logout = async () => {
-  const refreshToken = localStorage.getItem("refresh-token");
-  return await api.post("/auth/logout", {
-    refreshToken: refreshToken,
-  });
+  try {
+    const refreshToken = localStorage.getItem("refresh-token");
+    await api.post("/auth/logout", {
+      refreshToken: refreshToken,
+    });
+
+    localStorage.clear();
+  } catch (error) {
+    console.error(error);
+  }
 };
