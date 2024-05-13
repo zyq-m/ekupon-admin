@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
-import { Layout, Tablefilter } from "../../components";
+import { Layout, Tablefilter, Modal } from "../../components";
 
 import { api } from "../../services/axios";
+import { useModal } from "../../hooks";
 
 export default function TransactionAllCafe() {
   const [select, setSelect] = useState("");
   const [transaction, setTransaction] = useState([]);
   const [byDate, setByDate] = useState({});
+  const { error, showModal } = useModal();
 
   useEffect(() => {
     api
@@ -19,6 +21,9 @@ export default function TransactionAllCafe() {
       })
       .then((res) => {
         setTransaction(res.data.transaction);
+      })
+      .catch((err) => {
+        showModal(err.response.data.message);
       });
   }, [byDate?.from, byDate?.to, select]);
 
@@ -63,6 +68,7 @@ export default function TransactionAllCafe() {
           </tbody>
         </table>
       </div>
+      <Modal error={error} />
     </Layout>
   );
 }

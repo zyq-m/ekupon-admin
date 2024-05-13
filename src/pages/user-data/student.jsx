@@ -1,19 +1,21 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Layout, Tablefilter } from "../../components";
+import { Layout, Tablefilter, Modal } from "../../components";
 
 import { api } from "../../services/axios";
+import { useModal } from "../../hooks";
 
 export default function StudentData() {
   const [student, setStudent] = useState([]);
   const [fund, setFund] = useState("");
+  const { error, showModal } = useModal();
 
   useEffect(() => {
     api
       .get("/admin/student", { params: { fundType: fund } })
       .then((res) => setStudent(res.data.student))
       .catch((err) => {
-        console.error(err);
+        showModal(err.response.data.message);
       });
   }, [fund]);
 
@@ -56,6 +58,7 @@ export default function StudentData() {
           </tbody>
         </table>
       </div>
+      <Modal error={error} />
     </Layout>
   );
 }

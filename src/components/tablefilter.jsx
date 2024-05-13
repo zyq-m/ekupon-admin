@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { fundType as data } from "../pages/registration/student";
+import { useEffect, useState } from "react";
+import { api } from "../services/axios";
 
 export default function Tablefilter({
   fundType,
@@ -9,6 +9,7 @@ export default function Tablefilter({
   setDate,
 }) {
   const [byDate, setByDate] = useState({});
+  const [data, setData] = useState([]);
 
   function onSelect(e) {
     return setSelect(e.target.value);
@@ -17,6 +18,27 @@ export default function Tablefilter({
   function onDate() {
     return setDate(byDate);
   }
+
+  async function fetchFundType() {
+    api
+      .get("/limit")
+      .then((res) => {
+        setData(() => {
+          return res.data.map((d) => ({
+            id: d.id,
+            title: d.role.name,
+            value: d.role.name,
+          }));
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  useEffect(() => {
+    fundType && fetchFundType();
+  }, [fundType]);
 
   return (
     <div className="flex justify-between gap-2 mb-4">

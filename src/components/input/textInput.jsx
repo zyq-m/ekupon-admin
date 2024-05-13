@@ -1,4 +1,10 @@
-export default function TextInput({ label, placeholder, type, onChange }) {
+export default function TextInput({
+  label,
+  placeholder,
+  type,
+  onChange,
+  value,
+}) {
   return (
     <label className="form-control w-full">
       <div className="label">
@@ -8,6 +14,7 @@ export default function TextInput({ label, placeholder, type, onChange }) {
         type={type}
         placeholder={placeholder}
         className="input input-bordered w-full"
+        value={value}
         onChange={onChange}
       />
     </label>

@@ -2,17 +2,6 @@ import { useEffect, useState } from "react";
 import { Layout } from "../components";
 import { api } from "../services/axios";
 
-const limit = [
-  {
-    role: "MAIDAM",
-    limit: 5,
-  },
-  {
-    role: "B40",
-    limit: 5,
-  },
-];
-
 export default function SpendLimit() {
   const [limit, setLimit] = useState([]);
 
