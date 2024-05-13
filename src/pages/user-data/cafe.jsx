@@ -1,4 +1,4 @@
-import { useState, useId, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Layout } from "../../components";
 
@@ -42,7 +42,15 @@ export default function CafeData() {
                     <td>{d.user.profile.name}</td>
                     <td>{d.accountNo || "N/A"}</td>
                     <td>{d.bank || "N/A"}</td>
-                    <td>{d.user.active ? "active" : "suspended"}</td>
+                    <td>
+                      <button
+                        className={`btn ${
+                          d.user.active ? "btn-accent" : "btn-error"
+                        } btn-xs`}
+                      >
+                        {d.user.active ? "active" : "suspended"}
+                      </button>
+                    </td>
                     <td>
                       <Link
                         to={`transaction/${d.id}`}

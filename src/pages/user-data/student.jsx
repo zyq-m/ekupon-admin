@@ -42,7 +42,15 @@ export default function StudentData() {
                     <td className="capitalize">{d.user.profile.name}</td>
                     <td>{d.matricNo}</td>
                     <td>{d.coupon.total}</td>
-                    <td>{d.user.active ? "active" : "suspended"}</td>
+                    <td>
+                      <button
+                        className={`btn ${
+                          d.user.active ? "btn-accent" : "btn-error"
+                        } btn-xs`}
+                      >
+                        {d.user.active ? "active" : "suspended"}
+                      </button>
+                    </td>
                     <td>
                       <Link
                         to={`transaction/${d.matricNo}`}

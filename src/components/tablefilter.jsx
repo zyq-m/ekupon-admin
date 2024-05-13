@@ -8,7 +8,7 @@ export default function Tablefilter({
   setSelect,
   setDate,
 }) {
-  const [byDate, setByDate] = useState({});
+  const [byDate, setByDate] = useState({ to: "", from: "" });
   const [data, setData] = useState([]);
 
   function onSelect(e) {
@@ -34,6 +34,17 @@ export default function Tablefilter({
       .catch((err) => {
         console.error(err);
       });
+  }
+
+  async function onPdf() {
+    try {
+      const res = await api.get(
+        `/admin/report/transaction/pdf/${byDate.from}/${byDate.to}`
+      );
+      window.open("", "_blank").document.write(res.data);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   useEffect(() => {
@@ -86,7 +97,11 @@ export default function Tablefilter({
           <button className="btn btn-accent btn-sm" onClick={onDate}>
             Find
           </button>
-          {print && <button className="btn btn-accent btn-sm">Print</button>}
+          {print && (
+            <button className="btn btn-accent btn-sm" onClick={onPdf}>
+              Print
+            </button>
+          )}
         </div>
       )}
     </div>
