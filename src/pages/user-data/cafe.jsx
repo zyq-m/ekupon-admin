@@ -1,4 +1,4 @@
-import { useState, useEffect, memo } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Layout, BtnSuspend, Loading } from "../../components";
 

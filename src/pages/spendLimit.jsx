@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { Layout, Loading } from "../components";
+import { Layout, Loading, Modal } from "../components";
 import { api } from "../services/axios";
+import { useModal } from "../hooks";
 
 export default function SpendLimit() {
   const [limit, setLimit] = useState([]);
+  const { error, showModal } = useModal();
 
   async function updateLimit(roleId) {
     const list = limit.filter((data) => data.role.id === roleId);
@@ -13,7 +15,7 @@ export default function SpendLimit() {
         roleId: roleId,
       });
 
-      alert("Spend limit updated");
+      showModal("Spend limit updated");
     } catch (error) {
       console.error(error);
     }
@@ -91,6 +93,7 @@ export default function SpendLimit() {
           </tbody>
         </table>
       </div>
+      <Modal error={error} title="Success" />
     </Layout>
   );
 }
