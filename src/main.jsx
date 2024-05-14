@@ -10,57 +10,62 @@ import "./index.css";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/ekupon-admin",
     element: <Page.Dashboard />,
     loader: protectedLoader,
   },
   {
-    path: "/register/cafe",
+    path: "/ekupon-admin/dashboard",
+    element: <Page.Dashboard />,
+    loader: protectedLoader,
+  },
+  {
+    path: "/ekupon-admin/register/cafe",
     element: <Page.CafeRegister />,
     loader: protectedLoader,
   },
   {
-    path: "/register/student",
+    path: "/ekupon-admin/register/student",
     element: <Page.StudentRegister />,
     loader: protectedLoader,
   },
   {
-    path: "/data/cafe",
+    path: "/ekupon-admin/data/cafe",
     element: <Page.CafeData />,
     loader: protectedLoader,
   },
   {
-    path: "/data/cafe/transaction/:id",
+    path: "/ekupon-admin/data/cafe/transaction/:id",
     element: <Page.CafeTransaction />,
     loader: protectedLoader,
   },
   {
-    path: "/data/student",
+    path: "/ekupon-admin/data/student",
     element: <Page.StudentData />,
     loader: protectedLoader,
   },
   {
-    path: "/data/student/transaction/:id",
+    path: "/ekupon-admin/data/student/transaction/:id",
     element: <Page.StudentTransaction />,
     loader: protectedLoader,
   },
   {
-    path: "/top-up-wallet",
+    path: "/ekupon-admin/top-up-wallet",
     element: <Page.TopUpWallet />,
     loader: protectedLoader,
   },
   {
-    path: "/transaction/cafe/all",
+    path: "/ekupon-admin/transaction/cafe/all",
     element: <Page.TransactionAllCafe />,
     loader: protectedLoader,
   },
   {
-    path: "/spend-limit",
+    path: "/ekupon-admin/spend-limit",
     element: <Page.SpendLimit />,
     loader: protectedLoader,
   },
   {
-    path: "/login",
+    path: "/ekupon-admin/login",
     element: <Page.Login />,
   },
 ]);
@@ -73,7 +78,7 @@ function protectedLoader({ request }) {
   if (!token) {
     let params = new URLSearchParams();
     params.set("from", new URL(request.url).pathname);
-    return redirect("/login?" + params.toString());
+    return redirect("/ekupon-admin/login?" + params.toString());
   }
   return null;
 }

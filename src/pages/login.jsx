@@ -15,7 +15,7 @@ export default function Login() {
 
     try {
       await login(credential.email, credential.password);
-      navigate("/");
+      navigate("/ekupon-admin/dashboard");
     } catch (error) {
       showModal(error.response.data);
     }

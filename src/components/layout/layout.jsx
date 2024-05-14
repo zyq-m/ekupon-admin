@@ -7,7 +7,7 @@ export default function Layout({ children, title }) {
 
   async function onLogout() {
     await logout();
-    navigate("/login");
+    navigate("/ekupon-admin");
   }
 
   return (

@@ -10,7 +10,7 @@ const nav = [
   {
     id: 1,
     name: "Dashboard",
-    link: "/",
+    link: "/ekupon-admin/dashboard",
     icon: () => <HomeRoundedIcon fontSize="small" />,
   },
   {
@@ -21,12 +21,12 @@ const nav = [
       {
         id: 1.2,
         name: "Cafe",
-        link: "/register/cafe",
+        link: "/ekupon-admin/register/cafe",
       },
       {
         id: 1.3,
         name: "Student",
-        link: "/register/student",
+        link: "/ekupon-admin/register/student",
       },
     ],
   },
@@ -38,31 +38,31 @@ const nav = [
       {
         id: 1.2,
         name: "Cafe",
-        link: "/data/cafe",
+        link: "/ekupon-admin/data/cafe",
       },
       {
         id: 1.3,
         name: "Student",
-        link: "/data/student",
+        link: "/ekupon-admin/data/student",
       },
     ],
   },
   {
     id: 3,
     name: "Top up",
-    link: "/top-up-wallet",
+    link: "/ekupon-admin/top-up-wallet",
     icon: () => <AddCardRoundedIcon fontSize="small" />,
   },
   {
     id: 4,
     name: "Transaction",
-    link: "/transaction/cafe/all",
+    link: "/ekupon-admin/transaction/cafe/all",
     icon: () => <ChecklistRoundedIcon fontSize="small" />,
   },
   {
     id: 5,
     name: "spend limit",
-    link: "/spend-limit",
+    link: "/ekupon-admin/spend-limit",
     icon: () => <PaidRoundedIcon fontSize="small" />,
   },
 ];
