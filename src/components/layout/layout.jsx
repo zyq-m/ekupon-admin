@@ -47,7 +47,7 @@ export default function Layout({ children, title }) {
       <div className="flex">
         <Sidebar />
         <div className="divider divider-horizontal mx-6"></div>
-        <div className="flex-1">
+        <div className="flex-1 pb-6">
           <h2 className="capitalize text-xl font-semibold mb-4">{title}</h2>
           {children}
         </div>

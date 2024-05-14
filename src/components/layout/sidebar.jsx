@@ -74,7 +74,7 @@ export default function Sidebar() {
     <>
       <nav
         className="flex flex-col justify-between w-[169px]"
-        style={{ minHeight: "calc(100vh - 40px)" }}
+        style={{ minHeight: "calc(100vh - 4rem)" }}
       >
         <ul>
           {nav.map((d) => {
