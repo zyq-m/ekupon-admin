@@ -38,9 +38,9 @@ export default function Tablefilter({
 
   async function onPdf() {
     try {
-      const res = await api.get(
-        `/admin/report/transaction/pdf/${byDate.from}/${byDate.to}`
-      );
+      const res = await api.get(`/admin/report/transaction/pdf`, {
+        params: byDate,
+      });
       window.open("", "_blank").document.write(res.data);
     } catch (error) {
       console.error(error);
