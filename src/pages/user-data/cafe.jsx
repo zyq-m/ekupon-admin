@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import { Link } from "react-router-dom";
-import { Layout, BtnSuspend } from "../../components";
+import { Layout, BtnSuspend, Loading } from "../../components";
 
 import { api } from "../../services/axios";
 
@@ -17,6 +17,14 @@ export default function CafeData() {
         console.error(err);
       });
   }, []);
+
+  if (!cafe.length) {
+    return (
+      <Layout title="Cafe data">
+        <Loading />
+      </Layout>
+    );
+  }
 
   return (
     <Layout title="Cafe data">

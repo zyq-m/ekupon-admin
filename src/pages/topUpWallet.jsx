@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Layout, Tablefilter, Modal } from "../components";
+import { Layout, Tablefilter, Modal, Loading } from "../components";
 
 import { api } from "../services/axios";
 import { useModal } from "../hooks";
@@ -81,6 +81,14 @@ export default function TopUpWallet() {
   useEffect(() => {
     fetchData();
   }, [select]);
+
+  if (!student.length) {
+    return (
+      <Layout title="Top up wallet">
+        <Loading />
+      </Layout>
+    );
+  }
 
   return (
     <Layout title="Top up wallet">

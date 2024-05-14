@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Layout, Tablefilter, Modal, BtnSuspend } from "../../components";
+import {
+  Layout,
+  Tablefilter,
+  Modal,
+  BtnSuspend,
+  Loading,
+} from "../../components";
 
 import { api } from "../../services/axios";
 import { useModal } from "../../hooks";
@@ -18,6 +24,14 @@ export default function StudentData() {
         showModal(err.response.data.message);
       });
   }, [fund]);
+
+  if (!student.length) {
+    return (
+      <Layout title="Student data">
+        <Loading />
+      </Layout>
+    );
+  }
 
   return (
     <Layout title="Student data">

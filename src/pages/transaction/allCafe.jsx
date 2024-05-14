@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Layout, Tablefilter, Modal } from "../../components";
+import { Layout, Tablefilter, Modal, Loading } from "../../components";
 
 import { api } from "../../services/axios";
 import { useModal } from "../../hooks";
@@ -26,6 +26,14 @@ export default function TransactionAllCafe() {
         showModal(err.response.data.message);
       });
   }, [byDate?.from, byDate?.to, select]);
+
+  if (!transaction.length) {
+    return (
+      <Layout title="cafe Transaction Report">
+        <Loading />
+      </Layout>
+    );
+  }
 
   return (
     <Layout title="Cafe Transaction Report">

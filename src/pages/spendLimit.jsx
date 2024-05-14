@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Layout } from "../components";
+import { Layout, Loading } from "../components";
 import { api } from "../services/axios";
 
 export default function SpendLimit() {
@@ -40,6 +40,14 @@ export default function SpendLimit() {
         console.error(err);
       });
   }, []);
+
+  if (!limit.length) {
+    return (
+      <Layout title="Spend Limit">
+        <Loading />
+      </Layout>
+    );
+  }
 
   return (
     <Layout title="Spend Limit">

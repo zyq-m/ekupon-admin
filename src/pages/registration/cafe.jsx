@@ -36,7 +36,7 @@ export default function CafeRegister() {
 
   return (
     <Layout title="Register Cafe">
-      <form className="grid grid-cols-2 gap-4" onSubmit={onRegister}>
+      <form className="grid grid-cols-2 gap-4 max-w-lg" onSubmit={onRegister}>
         <TextInput
           label="Name"
           type="text"
