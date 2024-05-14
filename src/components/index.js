@@ -6,6 +6,7 @@ import TransactionTable from "./transactionTable";
 import Tablefilter from "./tablefilter";
 import Modal from "./modal";
 import BtnSuspend from "./input/btnSuspend";
+import Loading from "./loading";
 
 export {
   Layout,
@@ -16,4 +17,5 @@ export {
   Tablefilter,
   Modal,
   BtnSuspend,
+  Loading,
 };
