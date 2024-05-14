@@ -5,6 +5,7 @@ import Select from "./input/select";
 import TransactionTable from "./transactionTable";
 import Tablefilter from "./tablefilter";
 import Modal from "./modal";
+import BtnSuspend from "./input/btnSuspend";
 
 export {
   Layout,
@@ -14,4 +15,5 @@ export {
   TransactionTable,
   Tablefilter,
   Modal,
+  BtnSuspend,
 };

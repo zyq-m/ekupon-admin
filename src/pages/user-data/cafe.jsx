@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Layout } from "../../components";
+import { Layout, BtnSuspend } from "../../components";
 
 import { api } from "../../services/axios";
 
@@ -43,13 +43,7 @@ export default function CafeData() {
                     <td>{d.accountNo || "N/A"}</td>
                     <td>{d.bank || "N/A"}</td>
                     <td>
-                      <button
-                        className={`btn ${
-                          d.user.active ? "btn-accent" : "btn-error"
-                        } btn-xs`}
-                      >
-                        {d.user.active ? "active" : "suspended"}
-                      </button>
+                      <BtnSuspend active={d.user.active} userId={d.userId} />
                     </td>
                     <td>
                       <Link

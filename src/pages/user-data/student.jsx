@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Layout, Tablefilter, Modal } from "../../components";
+import { Layout, Tablefilter, Modal, BtnSuspend } from "../../components";
 
 import { api } from "../../services/axios";
 import { useModal } from "../../hooks";
@@ -43,13 +43,7 @@ export default function StudentData() {
                     <td>{d.matricNo}</td>
                     <td>{d.coupon.total}</td>
                     <td>
-                      <button
-                        className={`btn ${
-                          d.user.active ? "btn-accent" : "btn-error"
-                        } btn-xs`}
-                      >
-                        {d.user.active ? "active" : "suspended"}
-                      </button>
+                      <BtnSuspend active={d.user.active} userId={d.userId} />
                     </td>
                     <td>
                       <Link
