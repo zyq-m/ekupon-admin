@@ -6,7 +6,6 @@ import {
   TransactionTable,
   Tablefilter,
   Modal,
-  Loading,
 } from "../../../components";
 import { api } from "../../../services/axios";
 import { useModal } from "../../../hooks";
@@ -29,14 +28,6 @@ export default function CafeTransaction() {
         showModal(err.response.data.message);
       });
   }, [id, select]);
-
-  if (!transaction.length) {
-    return (
-      <Layout title={cafeName}>
-        <Loading />
-      </Layout>
-    );
-  }
 
   return (
     <Layout title={cafeName}>

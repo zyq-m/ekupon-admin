@@ -1,13 +1,9 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import {
-  Layout,
-  TransactionTable,
-  Tablefilter,
-  Loading,
-} from "../../../components";
+import { Layout, TransactionTable, Tablefilter } from "../../../components";
 import { api } from "../../../services/axios";
+
 export default function StudentTransaction() {
   const { id } = useParams();
   const [transaction, setTransaction] = useState([]);
@@ -26,14 +22,6 @@ export default function StudentTransaction() {
         console.error(err);
       });
   }, [id]);
-
-  if (!transaction.length) {
-    return (
-      <Layout title={studentName}>
-        <Loading />
-      </Layout>
-    );
-  }
 
   return (
     <Layout title={studentName}>
