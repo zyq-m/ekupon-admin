@@ -31,6 +31,13 @@ export default function TransactionTable({ data, cafe }) {
               </>
             );
           })}
+          {data?.summary && (
+            <tr>
+              <td colSpan="2"></td>
+              <td>Total</td>
+              <td>{data.summary?._sum.amount}</td>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>
