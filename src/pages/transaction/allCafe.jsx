@@ -77,12 +77,14 @@ export default function TransactionAllCafe() {
                 </>
               );
             })}
-            <tr className="font-bold">
-              <td colSpan="6"></td>
-              <td>Total</td>
-              <td>{transaction?.total.totalTransaction}</td>
-              <td>{transaction?.total.totalAmount}</td>
-            </tr>
+            {transaction?.total && (
+              <tr className="font-bold">
+                <td colSpan="6"></td>
+                <td>Total</td>
+                <td>{transaction?.total?.totalTransaction}</td>
+                <td>{transaction?.total.totalAmount}</td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
