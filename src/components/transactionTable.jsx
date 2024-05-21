@@ -32,7 +32,7 @@ export default function TransactionTable({ data, cafe }) {
             );
           })}
           {data?.summary && (
-            <tr>
+            <tr className="font-bold">
               <td colSpan="2"></td>
               <td>Total</td>
               <td>{data.summary?._sum.amount}</td>
