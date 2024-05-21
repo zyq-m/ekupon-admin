@@ -78,7 +78,7 @@ export default function TransactionAllCafe() {
               );
             })}
             <tr className="font-bold">
-              <td colSpan="5"></td>
+              <td colSpan="6"></td>
               <td>Total</td>
               <td>{transaction?.total.totalTransaction}</td>
               <td>{transaction?.total.totalAmount}</td>
