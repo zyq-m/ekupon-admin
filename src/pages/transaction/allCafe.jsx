@@ -27,7 +27,7 @@ export default function TransactionAllCafe() {
       });
   }, [byDate?.from, byDate?.to, select]);
 
-  if (!transaction.transaction.length) {
+  if (!transaction.transaction?.length) {
     return (
       <Layout title="cafe Transaction Report">
         <Loading />
