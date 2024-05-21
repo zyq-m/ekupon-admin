@@ -20,14 +20,14 @@ export default function TransactionAllCafe() {
         },
       })
       .then((res) => {
-        setTransaction(res.data.transaction);
+        setTransaction(res.data);
       })
       .catch((err) => {
         showModal(err.response.data.message);
       });
   }, [byDate?.from, byDate?.to, select]);
 
-  if (!transaction.length) {
+  if (!transaction.transaction.length) {
     return (
       <Layout title="cafe Transaction Report">
         <Loading />
@@ -49,23 +49,25 @@ export default function TransactionAllCafe() {
           <thead>
             <tr>
               <th></th>
-              <th>Name</th>
               <th>Cafe Name</th>
+              <th>Premise Address</th>
+              <th>Owner Name/Founder</th>
               <th>Account No.</th>
-              <th>Bank</th>
-              <th>Total Transaction</th>
+              <th>Bank Name</th>
+              <th>Transaction</th>
               <th>Total(RM)</th>
             </tr>
           </thead>
           <tbody>
-            {transaction?.map((d, i) => {
+            {transaction.transaction?.map((d, i) => {
               return (
                 <>
                   <tr className="hover" key={d.id}>
                     <th>{i + 1}</th>
-                    <td>{d.name}</td>
                     <td>{d.cafeName}</td>
-                    <td>{d.accountNo}</td>
+                    <td>{d.name}</td>
+                    <td>{d.premise}</td>
+                    <td>{d.accountNo || "N/A"}</td>
                     <td>{d.bank || "N/A"}</td>
                     <td>{d.totalTransaction}</td>
                     <td>{d.totalAmount}</td>
@@ -73,6 +75,12 @@ export default function TransactionAllCafe() {
                 </>
               );
             })}
+            <tr className="font-bold">
+              <td colSpan="5"></td>
+              <td>Total</td>
+              <td>{transaction?.total.totalTransaction}</td>
+              <td>{transaction?.total.totalAmount}</td>
+            </tr>
           </tbody>
         </table>
       </div>
