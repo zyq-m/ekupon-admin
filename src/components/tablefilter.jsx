@@ -10,8 +10,10 @@ export default function Tablefilter({
 }) {
   const [byDate, setByDate] = useState({ to: "", from: "" });
   const [data, setData] = useState([]);
+  const [selected, setSelected] = useState("");
 
   function onSelect(e) {
+    setSelected(e.target.value);
     return setSelect(e.target.value);
   }
 
@@ -39,7 +41,7 @@ export default function Tablefilter({
   async function onPdf() {
     try {
       const res = await api.get(`/admin/report/transaction/pdf`, {
-        params: byDate,
+        params: { fundType: selected, from: byDate.from, to: byDate.to },
       });
       window.open("", "_blank").document.write(res.data);
     } catch (error) {
