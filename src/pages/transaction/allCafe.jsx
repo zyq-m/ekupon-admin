@@ -49,7 +49,7 @@ export default function TransactionAllCafe() {
           <thead>
             <tr>
               <th></th>
-              <th>Cafe Name</th>
+              <th>Company Name</th>
               <th>Premise Address</th>
               <th>Owner Name/Founder</th>
               <th>Account No.</th>
@@ -65,8 +65,8 @@ export default function TransactionAllCafe() {
                   <tr className="hover" key={d.id}>
                     <th>{i + 1}</th>
                     <td>{d.cafeName}</td>
-                    <td>{d.name}</td>
                     <td>{d.premise}</td>
+                    <td>{d.name}</td>
                     <td>{d.accountNo || "N/A"}</td>
                     <td>{d.bank || "N/A"}</td>
                     <td>{d.totalTransaction}</td>
