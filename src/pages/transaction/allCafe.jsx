@@ -52,6 +52,7 @@ export default function TransactionAllCafe() {
               <th>Company Name</th>
               <th>Premise Address</th>
               <th>Owner Name/Founder</th>
+              <th>Phone No.</th>
               <th>Account No.</th>
               <th>Bank Name</th>
               <th>Transaction</th>
@@ -67,6 +68,7 @@ export default function TransactionAllCafe() {
                     <td>{d.cafeName}</td>
                     <td>{d.premise}</td>
                     <td>{d.name}</td>
+                    <td>{d.phoneNo}</td>
                     <td>{d.accountNo || "N/A"}</td>
                     <td>{d.bank || "N/A"}</td>
                     <td>{d.totalTransaction}</td>
