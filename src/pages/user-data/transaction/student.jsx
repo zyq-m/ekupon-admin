@@ -1,13 +1,20 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import { Layout, TransactionTable, Tablefilter } from "../../../components";
+import {
+  Layout,
+  TransactionTable,
+  Tablefilter,
+  Modal,
+} from "../../../components";
 import { api } from "../../../services/axios";
+import { useModal } from "../../../hooks";
 
 export default function StudentTransaction() {
   const { id } = useParams();
   const [transaction, setTransaction] = useState([]);
   const [studentName, setStudentName] = useState("");
+  const { error, showModal } = useModal();
 
   useEffect(() => {
     api
@@ -19,7 +26,7 @@ export default function StudentTransaction() {
         );
       })
       .catch((err) => {
-        console.error(err);
+        showModal(err.response.data.message);
       });
   }, [id]);
 
@@ -27,6 +34,7 @@ export default function StudentTransaction() {
     <Layout title={studentName}>
       <Tablefilter />
       <TransactionTable cafe={false} data={transaction} />
+      <Modal error={error} />
     </Layout>
   );
 }
