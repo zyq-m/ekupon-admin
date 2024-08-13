@@ -35,8 +35,9 @@ api.interceptors.response.use(
       // Store access token in local storage
       localStorage.setItem("access-token", token.data.accessToken);
 
-      axios.defaults.headers.common["Authorization"] =
-        `Bearer ${token.data.accessToken}`;
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${token.data.accessToken}`;
       return api(originalRequest);
     }
     return Promise.reject(error);
