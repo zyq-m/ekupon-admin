@@ -14,7 +14,7 @@ export default function TransactionAllCafe() {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const res = await Promise.all(
+        const res = await Promise.allSettled(
           ["/admin/report/transaction/old", "/admin/report/transaction"].map(
             (url) =>
               api.get(url, {
@@ -27,17 +27,29 @@ export default function TransactionAllCafe() {
           )
         );
 
-        setTransactionOld(res[0].data);
-        setTransaction(res[1].data);
+        res.map((e, i) => {
+          if (e.status == "rejected" && i == 1) {
+            showModal(e.reason.response.data.message);
+          }
+
+          if (e.status == "fulfilled" && i == 0) {
+            setTransactionOld(res[0].value.data);
+          }
+
+          if (e.status == "fulfilled" && i == 1) {
+            setTransaction(res[1].value.data);
+          }
+        });
       } catch (error) {
-        showModal(error.response.data.message);
+        console.error(error);
+        // showModal(error.response.data.message);
       }
     };
 
     fetch();
   }, [byDate?.from, byDate?.to, select]);
 
-  if (!transaction.transaction?.length) {
+  if (!transaction?.transaction?.length) {
     return (
       <Layout title="cafe Transaction Report">
         <Loading />
@@ -82,7 +94,7 @@ export default function TransactionAllCafe() {
               </tr>
             </thead>
             <tbody>
-              {transaction.transaction?.map((d, i) => {
+              {transaction?.transaction?.map((d, i) => {
                 return (
                   <>
                     <tr className="hover" key={d.id}>
