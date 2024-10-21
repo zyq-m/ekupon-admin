@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Layout } from "../components";
 
 import { socket } from "../services/io";
+import { formatedNum } from "../utils/helper";
 
 export default function Dashboard() {
 	const [summary, setSummary] = useState({
@@ -9,10 +10,6 @@ export default function Dashboard() {
 		cafe: 0,
 		coupon: 0,
 	});
-
-	const formatedNum = (num) => {
-		return new Intl.NumberFormat("en-US").format(num);
-	};
 
 	useEffect(() => {
 		socket.emit("admin:get-overall");
