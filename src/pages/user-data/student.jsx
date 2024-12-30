@@ -37,14 +37,16 @@ export default function StudentData() {
 	};
 
 	useEffect(() => {
-		api.get("/admin/student", { params: { fundType: fund } })
-			.then((res) => setStudent(res.data.student))
-			.catch((err) => {
-				showModal(err.response.data.message);
-			});
+		fund &&
+			api
+				.get("/student", { params: { fundId: fund } })
+				.then((res) => setStudent(res.data))
+				.catch((err) => {
+					showModal(err.response.data.message);
+				});
 	}, [fund]);
 
-	if (!student.length) {
+	if (!student.length && fund) {
 		return (
 			<Layout title="Student data">
 				<Loading />
@@ -79,34 +81,28 @@ export default function StudentData() {
 						</tr>
 					</thead>
 					<tbody>
-						{student.map((d, i) => {
-							return (
-								<>
-									<tr className="hover" key={d.matricNo}>
-										<th>{i + 1}</th>
-										<td className="capitalize">
-											{d.user.profile.name}
-										</td>
-										<td>{d.matricNo}</td>
-										<td>{d.coupon.total}</td>
-										<td>
-											<BtnSuspend
-												active={d.user.active}
-												userId={d.userId}
-											/>
-										</td>
-										<td>
-											<Link
-												to={`transaction/${d.matricNo}`}
-												className="btn btn-ghost btn-xs"
-											>
-												transactions
-											</Link>
-										</td>
-									</tr>
-								</>
-							);
-						})}
+						{student.map((d, i) => (
+							<tr className="hover" key={d.matric_no}>
+								<th>{i + 1}</th>
+								<td className="capitalize">{d.name}</td>
+								<td>{d.matric_no}</td>
+								<td>{d.coupons[0].balance.toFixed(2)}</td>
+								<td>
+									<BtnSuspend
+										active={d.user.is_active}
+										userId={d.matric_no}
+									/>
+								</td>
+								<td>
+									<Link
+										to={`transaction/${d.ic_no}`}
+										className="btn btn-ghost btn-xs"
+									>
+										transactions
+									</Link>
+								</td>
+							</tr>
+						))}
 					</tbody>
 				</table>
 			</div>

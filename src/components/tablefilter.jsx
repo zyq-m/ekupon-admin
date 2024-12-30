@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { api } from "../services/axios";
+import dayjs from "dayjs";
 
 export default function Tablefilter({
 	fundType,
@@ -8,9 +9,12 @@ export default function Tablefilter({
 	setSelect,
 	setDate,
 }) {
-	const [byDate, setByDate] = useState({ to: "", from: "" });
+	const [byDate, setByDate] = useState({
+		to: dayjs().endOf("month").format("YYYY-MM-DD"),
+		from: dayjs().startOf("month").format("YYYY-MM-DD"),
+	});
 	const [data, setData] = useState([]);
-	const [selected, setSelected] = useState("");
+	const [selected, setSelected] = useState(1);
 
 	function onSelect(e) {
 		setSelected(e.target.value);
@@ -20,15 +24,19 @@ export default function Tablefilter({
 	function onDate() {
 		return setDate(byDate);
 	}
+	function initSelect() {
+		return setSelect(selected);
+	}
 
 	async function fetchFundType() {
-		api.get("/limit")
+		api.get("/fund")
 			.then((res) => {
 				setData(() => {
 					return res.data.map((d) => ({
 						id: d.id,
-						title: d.role.name,
-						value: d.role.name,
+						title: d.name,
+						value: d.id,
+						selected: d.id == 1,
 					}));
 				});
 			})
@@ -39,14 +47,15 @@ export default function Tablefilter({
 
 	async function onPdf() {
 		try {
-			const res = await api.get(`/admin/report/transaction/pdf`, {
+			const res = await api.get(`/transaction/cafe`, {
 				params: {
-					fundType: selected,
+					fundId: selected,
 					from: byDate.from,
 					to: byDate.to,
+					pdf: true,
 				},
 			});
-			window.open("", "_blank").document.write(res.data);
+			window.open("test", "_blank").document.write(res.data);
 		} catch (error) {
 			console.error(error);
 		}
@@ -54,6 +63,8 @@ export default function Tablefilter({
 
 	useEffect(() => {
 		fundType && fetchFundType();
+		date && onDate();
+		initSelect();
 	}, [fundType]);
 
 	return (
@@ -65,15 +76,15 @@ export default function Tablefilter({
 						onChange={onSelect}
 					>
 						<option value="">Fund type</option>
-						{data?.map((d, i) => {
-							return (
-								<>
-									<option key={i} value={d.value}>
-										{d.title}
-									</option>
-								</>
-							);
-						})}
+						{data?.map((d, i) => (
+							<option
+								key={i}
+								value={d.value}
+								selected={d.selected}
+							>
+								{d.title}
+							</option>
+						))}
 					</select>
 				</div>
 			)}
@@ -84,6 +95,7 @@ export default function Tablefilter({
 						<input
 							type="date"
 							className="grow"
+							value={byDate.from}
 							onChange={(e) =>
 								setByDate((prev) => ({
 									...prev,
@@ -97,6 +109,7 @@ export default function Tablefilter({
 						<input
 							type="date"
 							className="grow"
+							value={byDate.to}
 							onChange={(e) =>
 								setByDate((prev) => ({
 									...prev,

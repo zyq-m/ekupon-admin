@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import { Layout, Tablefilter, Modal, Loading } from "../../components";
+import { Layout, Tablefilter, Modal } from "../../components";
 
 import { api } from "../../services/axios";
 import { useModal } from "../../hooks";
-import { formatedNum } from "../../utils/helper";
 
 export default function TransactionAllCafe() {
-	const [select, setSelect] = useState("MAIDAM");
+	const [select, setSelect] = useState("");
 	const [transaction, setTransaction] = useState([]);
 	const [byDate, setByDate] = useState({});
 	const { error, showModal } = useModal();
@@ -14,11 +13,11 @@ export default function TransactionAllCafe() {
 	useEffect(() => {
 		const fetch = async () => {
 			try {
-				const res = await api.get("/admin/report/transaction", {
+				const res = await api.get("/transaction/cafe", {
 					params: {
-						fundType: select,
-						from: byDate?.from,
-						to: byDate?.to,
+						fundId: select,
+						from: byDate.from,
+						to: byDate.to,
 					},
 				});
 				setTransaction(res.data);
@@ -27,16 +26,8 @@ export default function TransactionAllCafe() {
 			}
 		};
 
-		fetch();
+		select && fetch();
 	}, [byDate?.from, byDate?.to, select]);
-
-	if (!transaction?.transaction?.length) {
-		return (
-			<Layout title="cafe Transaction Report">
-				<Loading />
-			</Layout>
-		);
-	}
 
 	return (
 		<Layout title="Cafe Transaction Report">
@@ -60,44 +51,38 @@ export default function TransactionAllCafe() {
 								<th>Account No.</th>
 								<th>Bank Name</th>
 								<th>Transaction</th>
-								<th>Total</th>
+								<th>Total(RM)</th>
 							</tr>
 						</thead>
 						<tbody>
-							{transaction?.transaction?.map((d, i) => {
-								return (
-									<>
-										<tr className="hover" key={d.id}>
-											<th>{i + 1}</th>
-											<td>{d.cafeName}</td>
-											<td>{d.premise}</td>
-											<td>{d.name}</td>
-											<td>{d.phoneNo}</td>
-											<td>{d.accountNo || "N/A"}</td>
-											<td>{d.bank || "N/A"}</td>{" "}
-											<td className=" text-center">
-												{formatedNum(
-													d.totalTransaction
-												)}
-											</td>
-											<td className="">
-												{d.totalAmount}
-											</td>
-										</tr>
-									</>
-								);
-							})}
-							{transaction?.total && (
+							{transaction?.transactions?.map((d, i) => (
+								<tr className="hover" key={d.id}>
+									<th>{i + 1}</th>
+									<td>{d.cafe_name}</td>
+									<td>{d.premise}</td>
+									<td>{d.owner_name}</td>
+									<td>{d.no_tel}</td>
+									<td>{d.account_no || "N/A"}</td>
+									<td>{d.bank || "N/A"}</td>{" "}
+									<td className=" text-center">
+										{d.totalTransaction}
+									</td>
+									<td className="text-center">
+										{d.totalAmount.toFixed(2)}
+									</td>
+								</tr>
+							))}
+							{transaction?.summary && (
 								<tr className="font-bold">
 									<td colSpan="6"></td>
 									<td>Total</td>
 									<td className=" text-center">
-										{formatedNum(
-											transaction?.total?.totalTransaction
-										)}
+										{transaction?.summary?.totalTf}
 									</td>
 									<td className="">
-										{transaction?.total?.totalAmount}
+										{transaction?.summary?.totalAmount.toFixed(
+											2
+										)}
 									</td>
 								</tr>
 							)}

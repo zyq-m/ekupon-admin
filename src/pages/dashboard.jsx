@@ -14,6 +14,7 @@ export default function Dashboard() {
 	useEffect(() => {
 		socket.emit("admin:get-overall");
 		socket.on("admin:get-overall", (data) => {
+			console.log(data);
 			setSummary(data);
 		});
 	}, []);
