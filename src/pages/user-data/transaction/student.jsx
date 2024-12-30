@@ -6,13 +6,13 @@ import { api } from "../../../services/axios";
 import { useModal } from "../../../hooks";
 
 export default function StudentTransaction() {
-	const { id } = useParams();
+	const { id, fundId } = useParams();
 	const [transaction, setTransaction] = useState([]);
 	const [studentName, setStudentName] = useState("");
 	const { error, showModal } = useModal();
 
 	useEffect(() => {
-		api.get(`/transaction/student/${id}`)
+		api.get(`/transaction/student/${id}`, { params: { fundId } })
 			.then((res) => {
 				setTransaction(res.data);
 				setStudentName(

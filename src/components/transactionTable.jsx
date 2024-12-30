@@ -13,7 +13,7 @@ export default function TransactionTable({ data, cafe }) {
 					</tr>
 				</thead>
 				<tbody>
-					{data?.map((d, i) => (
+					{data?.transactions?.map((d, i) => (
 						<tr className="hover" key={d.id}>
 							<th>{i + 1}</th>
 							<td>
@@ -24,14 +24,14 @@ export default function TransactionTable({ data, cafe }) {
 							<td>
 								{dayjs(d.timestamp).format("DD/MM/YYYY hh:mma")}
 							</td>
-							<td>{d.amount.toFixed(2)}</td>
+							<td>{d.amount?.toFixed(2)}</td>
 						</tr>
 					))}
 					{data?.summary && (
 						<tr className="font-bold">
 							<td colSpan="2"></td>
 							<td>Total</td>
-							<td>{data.summary?._sum.amount}</td>
+							<td>{data.summary?.totalAmount?.toFixed(2)}</td>
 						</tr>
 					)}
 				</tbody>

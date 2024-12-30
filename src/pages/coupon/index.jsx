@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { Layout, Loading, Modal } from "../components";
-import { api } from "../services/axios";
-import { useModal } from "../hooks";
+import { Layout, Loading, Modal } from "../../components";
+import { api } from "../../services/axios";
+import { useModal } from "../../hooks";
 import dayjs from "dayjs";
 
-export default function SpendLimit() {
+export default function Coupon() {
 	const [limit, setLimit] = useState([]);
 	const { error, showModal } = useModal();
 
@@ -55,14 +55,14 @@ export default function SpendLimit() {
 
 	if (!limit.length) {
 		return (
-			<Layout title="Spend Limit">
+			<Layout title="Coupon">
 				<Loading />
 			</Layout>
 		);
 	}
 
 	return (
-		<Layout title="Spend Limit">
+		<Layout title="Coupon">
 			<div className="overflow-x-auto">
 				<table className="table">
 					<thead>
@@ -73,6 +73,7 @@ export default function SpendLimit() {
 							<th>Expired</th>
 							<th>Limit Per Transaction</th>
 							<th>Limit Spend</th>
+							<th>Amount(RM)</th>
 							<th></th>
 						</tr>
 					</thead>
@@ -89,7 +90,7 @@ export default function SpendLimit() {
 									<input
 										type="number"
 										value={d.limit_per_tf.toFixed(2)}
-										className="input input-ghost input-sm"
+										className="input input-ghost input-sm w-24 text-center"
 										onChange={(e) =>
 											onLimitTfChange(e, d.id)
 										}
@@ -99,10 +100,11 @@ export default function SpendLimit() {
 									<input
 										type="number"
 										value={d.limit_spend.toFixed(2)}
-										className="input input-ghost input-sm"
+										className="input input-ghost input-sm w-24 text-center"
 										onChange={(e) => onLimitChange(e, d.id)}
 									/>
 								</td>
+								<td>{d.amount.toFixed(2)}</td>
 								<td>
 									<button
 										className="btn btn-ghost btn-xs"

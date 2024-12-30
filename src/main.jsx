@@ -45,7 +45,7 @@ const router = createBrowserRouter([
 		loader: protectedLoader,
 	},
 	{
-		path: "/ekupon-admin/data/student/transaction/:id",
+		path: "/ekupon-admin/data/student/transaction/:id/:fundId",
 		element: <Page.StudentTransaction />,
 		loader: protectedLoader,
 	},
@@ -60,8 +60,13 @@ const router = createBrowserRouter([
 		loader: protectedLoader,
 	},
 	{
-		path: "/ekupon-admin/spend-limit",
-		element: <Page.SpendLimit />,
+		path: "/ekupon-admin/coupon/list",
+		element: <Page.Coupon />,
+		loader: protectedLoader,
+	},
+	{
+		path: "/ekupon-admin/coupon/setup",
+		element: <Page.SetupCoupon />,
 		loader: protectedLoader,
 	},
 	{

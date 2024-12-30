@@ -95,7 +95,7 @@ export default function StudentData() {
 								</td>
 								<td>
 									<Link
-										to={`transaction/${d.ic_no}`}
+										to={`transaction/${d.ic_no}/${fund}`}
 										className="btn btn-ghost btn-xs"
 									>
 										transactions

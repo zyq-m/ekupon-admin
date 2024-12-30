@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { api } from "../services/axios";
 import dayjs from "dayjs";
+import { createSearchParams, useLocation, useNavigate } from "react-router-dom";
 
 export default function Tablefilter({
 	fundType,
@@ -9,12 +10,16 @@ export default function Tablefilter({
 	setSelect,
 	setDate,
 }) {
+	const navigate = useNavigate();
+	const location = useLocation();
+	const params = new URLSearchParams(location.search);
+
 	const [byDate, setByDate] = useState({
 		to: dayjs().endOf("month").format("YYYY-MM-DD"),
 		from: dayjs().startOf("month").format("YYYY-MM-DD"),
 	});
 	const [data, setData] = useState([]);
-	const [selected, setSelected] = useState(1);
+	const [selected, setSelected] = useState(params.get("fundId") ?? 1);
 
 	function onSelect(e) {
 		setSelected(e.target.value);
@@ -36,7 +41,7 @@ export default function Tablefilter({
 						id: d.id,
 						title: d.name,
 						value: d.id,
-						selected: d.id == 1,
+						selected: d.id == selected,
 					}));
 				});
 			})
@@ -66,6 +71,13 @@ export default function Tablefilter({
 		date && onDate();
 		initSelect();
 	}, [fundType]);
+
+	useEffect(() => {
+		navigate({
+			pathname: location.pathname,
+			search: `${createSearchParams({ fundId: selected })}`,
+		});
+	}, [selected, fundType]);
 
 	return (
 		<div className="flex justify-between gap-2 mb-4">
