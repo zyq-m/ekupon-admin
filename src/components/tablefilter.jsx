@@ -15,8 +15,8 @@ export default function Tablefilter({
 	const params = new URLSearchParams(location.search);
 
 	const [byDate, setByDate] = useState({
-		to: dayjs().endOf("month").format("YYYY-MM-DD"),
-		from: dayjs().startOf("month").format("YYYY-MM-DD"),
+		to: dayjs().endOf("week").format("YYYY-MM-DD"),
+		from: dayjs().startOf("week").format("YYYY-MM-DD"),
 	});
 	const [data, setData] = useState([]);
 	const [selected, setSelected] = useState(params.get("fundId") ?? 1);
