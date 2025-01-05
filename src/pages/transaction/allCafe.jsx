@@ -68,7 +68,7 @@ export default function TransactionAllCafe() {
 										{d.totalTransaction}
 									</td>
 									<td className="text-center">
-										{d.totalAmount.toFixed(2)}
+										{d.totalAmount?.toFixed(2)}
 									</td>
 								</tr>
 							))}
@@ -80,7 +80,7 @@ export default function TransactionAllCafe() {
 										{transaction?.summary?.totalTf}
 									</td>
 									<td className="">
-										{transaction?.summary?.totalAmount.toFixed(
+										{transaction?.summary?.totalAmount?.toFixed(
 											2
 										)}
 									</td>
