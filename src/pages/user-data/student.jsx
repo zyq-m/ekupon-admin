@@ -86,7 +86,13 @@ export default function StudentData() {
 								<th>{i + 1}</th>
 								<td className="capitalize">{d.name}</td>
 								<td>{d.matric_no}</td>
-								<td>{d.coupons[0].balance.toFixed(2)}</td>
+								<td>
+									{d.coupons
+										.filter(
+											(coupon) => coupon.fund_id === +fund
+										)[0]
+										?.balance.toFixed(2)}
+								</td>
 								<td>
 									<BtnSuspend
 										active={d.user.is_active}
