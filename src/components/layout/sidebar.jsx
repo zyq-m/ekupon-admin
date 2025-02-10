@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import PersonAddAltRoundedIcon from "@mui/icons-material/PersonAddAltRounded";
@@ -31,47 +32,47 @@ const nav = [
 		],
 	},
 	{
-		id: 2,
-		name: "user data",
+		id: 3,
+		name: "User Data",
 		icon: () => <PeopleAltRoundedIcon fontSize="small" />,
 		child: [
 			{
-				id: 1.2,
+				id: 3.1,
 				name: "Cafe",
 				link: "/ekupon-admin/data/cafe",
 			},
 			{
-				id: 1.3,
+				id: 3.2,
 				name: "Student",
 				link: "/ekupon-admin/data/student",
 			},
 		],
 	},
 	{
-		id: 3,
-		name: "Top up",
+		id: 4,
+		name: "Top Up",
 		link: "/ekupon-admin/top-up-wallet",
 		icon: () => <AddCardRoundedIcon fontSize="small" />,
 	},
 	{
-		id: 4,
+		id: 5,
 		name: "Transaction",
 		link: "/ekupon-admin/transaction/cafe/all",
 		icon: () => <ChecklistRoundedIcon fontSize="small" />,
 	},
 	{
-		id: 5,
+		id: 6,
 		name: "Coupon",
 		icon: () => <PaidRoundedIcon fontSize="small" />,
 		child: [
 			{
-				id: 5.1,
+				id: 6.1,
 				name: "List",
 				link: "/ekupon-admin/coupon/list",
 			},
 			{
-				id: 5.2,
-				name: "Setup coupon",
+				id: 6.2,
+				name: "Setup Coupon",
 				link: "/ekupon-admin/coupon/setup",
 			},
 		],
@@ -79,73 +80,66 @@ const nav = [
 ];
 
 export default function Sidebar() {
-	const activeLink =
-		"flex gap-2 items-center px-3 py-2 rounded-lg capitalize";
+	const [expanded, setExpanded] = useState({});
+
+	const toggleExpansion = (id) => {
+		setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
+	};
+
+	const activeLink = "flex gap-2 items-center px-3 py-2 rounded-lg capitalize";
 
 	return (
-		<>
-			<nav
-				className="flex flex-col justify-between w-[169px]"
-				style={{ minHeight: "calc(100vh - 4rem)" }}
-			>
-				<ul>
-					{nav.map((d) => {
-						return (
-							<>
-								<li key={d.id}>
-									{d.link ? (
+		<nav
+			className="flex flex-col justify-between w-[169px]"
+			style={{ minHeight: "calc(100vh - 4rem)" }}
+		>
+			<ul>
+				{nav.map((d) => (
+					<li key={d.id}>
+						<div
+							className={`${activeLink} ${
+								d.link ? "" : "cursor-pointer"
+							}`}
+							onClick={() => d.child && toggleExpansion(d.id)}
+						>
+							{d.icon()}
+							{d.link ? (
+								<NavLink
+									to={d.link}
+									className={({ isActive }) =>
+										isActive
+											? `${activeLink} bg-stone-700 text-white`
+											: `${activeLink} hover:bg-gray-100`
+									}
+								>
+									{d.name}
+								</NavLink>
+							) : (
+								d.name
+							)}
+						</div>
+						{/* Child Menu */}
+						{d.child && expanded[d.id] && (
+							<ul className="ml-5">
+								{d.child.map((e) => (
+									<li key={e.id} className="ml-3">
 										<NavLink
-											to={d.link}
+											to={e.link}
 											className={({ isActive }) =>
 												isActive
 													? `${activeLink} bg-stone-700 text-white`
 													: `${activeLink} hover:bg-gray-100`
 											}
 										>
-											{d.icon()}
-											{d.name}
+											{e.name}
 										</NavLink>
-									) : (
-										<div className={`${activeLink}`}>
-											{d.icon()}
-											{d.name}
-										</div>
-									)}
-									{d.child && (
-										<>
-											<ul className="ml-3">
-												{d.child?.map((e) => {
-													return (
-														<>
-															<li
-																key={e.id}
-																className="ml-5 capitalize"
-															>
-																<NavLink
-																	to={e.link}
-																	className={({
-																		isActive,
-																	}) =>
-																		isActive
-																			? `${activeLink} bg-stone-700 text-white`
-																			: `${activeLink} hover:bg-gray-100`
-																	}
-																>
-																	{e.name}
-																</NavLink>
-															</li>
-														</>
-													);
-												})}
-											</ul>
-										</>
-									)}
-								</li>
-							</>
-						);
-					})}
-				</ul>
-			</nav>
-		</>
+									</li>
+								))}
+							</ul>
+						)}
+					</li>
+				))}
+			</ul>
+		</nav>
 	);
 }

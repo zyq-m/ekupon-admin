@@ -4,6 +4,10 @@ import { api } from "../../services/axios";
 import { useModal } from "../../hooks";
 import dayjs from "dayjs";
 
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import PaymentsIcon from '@mui/icons-material/Payments';
+import PersonIcon from '@mui/icons-material/Person';
+
 export default function Coupon() {
 	const [limit, setLimit] = useState([]);
 	const { error, showModal } = useModal();
@@ -63,6 +67,68 @@ export default function Coupon() {
 
 	return (
 		<Layout title="Coupon">
+			<div
+				className="flex gap-4 flex-nowrap overflow-x-auto"
+				style={{ whiteSpace: "nowrap" }}
+			>
+				<div
+				className="flex items-center gap-4 bg-white shadow-md rounded-lg p-4 w-80"
+				style={{ backgroundColor: "#f2f2f2" }}
+				>
+					<div className="flex items-center justify-center w-16 h-16 rounded-lg" style={{ backgroundColor: '#ffbe00'}}>
+						<AttachMoneyIcon style={{ color: "white", fontSize: "30px" }} />
+					</div>
+
+					<div className="flex flex-col flex-grow">
+						<div className="flex justify-between">
+						<h3 className="font-bold text-lg text-black">Total Fund</h3>
+						</div>
+						<p className="text-2xl font-semibold text-black">RM135,000.00</p>
+						<div className="flex items-center gap-1 text-sm text-orange-600">
+						{/* <span>+55% last month</span> */}
+						</div>
+					</div>
+				</div>
+
+				<div
+				className="flex items-center gap-4 bg-white shadow-md rounded-lg p-4 w-80"
+				style={{ backgroundColor: "#f2f2f2" }}
+				>
+					<div className="flex items-center justify-center w-16 h-16 rounded-lg" style={{ backgroundColor: '#ffbe00'}}>
+						<PaymentsIcon style={{ color: "white", fontSize: "30px" }} />
+					</div>
+
+					<div className="flex flex-col flex-grow">
+						<div className="flex justify-between">
+						<h3 className="font-bold text-lg text-black">Total Coupon</h3>
+						</div>
+						<p className="text-2xl font-semibold text-black">7</p>
+						<div className="flex items-center gap-1 text-sm text-orange-600">
+						{/* <span>+55% last month</span> */}
+						</div>
+					</div>
+				</div>
+
+				<div
+				className="flex items-center gap-4 bg-white shadow-md rounded-lg p-4 w-80"
+				style={{ backgroundColor: "#f2f2f2" }}
+				>
+					<div className="flex items-center justify-center w-16 h-16 rounded-lg" style={{ backgroundColor: '#ffbe00'}}>
+						<PersonIcon style={{ color: "white", fontSize: "30px" }} />
+					</div>
+
+					<div className="flex flex-col flex-grow">
+						<div className="flex justify-between">
+						<h3 className="font-bold text-lg text-black">Total Student Received</h3>
+						</div>
+						<p className="text-2xl font-semibold text-black">385</p>
+						<div className="flex items-center gap-1 text-sm text-orange-600">
+						{/* <span>+55% last month</span> */}
+						</div>
+					</div>
+				</div>
+			</div>
+			<br />
 			<div className="overflow-x-auto">
 				<table className="table">
 					<thead>
