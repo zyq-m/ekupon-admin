@@ -10,10 +10,9 @@ import {
 
 import { api } from "../../services/axios";
 import { useModal } from "../../hooks";
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import PaymentsIcon from '@mui/icons-material/Payments';
-import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
-
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import PaymentsIcon from "@mui/icons-material/Payments";
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 
@@ -65,58 +64,69 @@ export default function StudentData() {
 				style={{ whiteSpace: "nowrap" }}
 			>
 				<div
-				className="flex items-center gap-4 bg-white shadow-md rounded-lg p-4 w-80"
-				style={{ backgroundColor: "#f2f2f2" }}
+					className="flex items-center gap-4 bg-white shadow-md rounded-lg p-4 w-80"
+					style={{ backgroundColor: "#f2f2f2" }}
 				>
-					<div className="flex items-center justify-center w-16 h-16 rounded-lg" style={{ backgroundColor: '#ffbe00'}}>
+					<div
+						className="flex items-center justify-center w-16 h-16 rounded-lg"
+						style={{ backgroundColor: "#ffbe00" }}
+					>
 						<AttachMoneyIcon style={{ color: "white", fontSize: "30px" }} />
 					</div>
 
 					<div className="flex flex-col flex-grow">
 						<div className="flex justify-between">
-						<h3 className="font-bold text-lg text-black">Total Fund</h3>
+							<h3 className="font-bold text-lg text-black">Total Fund</h3>
 						</div>
-						<p className="text-2xl font-semibold text-black">RM0.00</p>
+						<p className="text-2xl font-semibold text-black">RM231,000.00</p>
 						<div className="flex items-center gap-1 text-sm text-orange-600">
-						{/* <span>+55% last month</span> */}
+							{/* <span>+55% last month</span> */}
 						</div>
 					</div>
 				</div>
 
 				<div
-				className="flex items-center gap-4 bg-white shadow-md rounded-lg p-4 w-80"
-				style={{ backgroundColor: "#f2f2f2" }}
+					className="flex items-center gap-4 bg-white shadow-md rounded-lg p-4 w-80"
+					style={{ backgroundColor: "#f2f2f2" }}
 				>
-					<div className="flex items-center justify-center w-16 h-16 rounded-lg" style={{ backgroundColor: '#ffbe00'}}>
+					<div
+						className="flex items-center justify-center w-16 h-16 rounded-lg"
+						style={{ backgroundColor: "#ffbe00" }}
+					>
 						<PaymentsIcon style={{ color: "white", fontSize: "30px" }} />
 					</div>
 
 					<div className="flex flex-col flex-grow">
 						<div className="flex justify-between">
-						<h3 className="font-bold text-lg text-black">Total Expenses</h3>
+							<h3 className="font-bold text-lg text-black">Total Expenses</h3>
 						</div>
-						<p className="text-2xl font-semibold text-black">RM0.00</p>
+						<p className="text-2xl font-semibold text-black">RM23,159.50</p>
 						<div className="flex items-center gap-1 text-sm text-orange-600">
-						{/* <span>+55% last month</span> */}
+							{/* <span>+55% last month</span> */}
 						</div>
 					</div>
 				</div>
 
 				<div
-				className="flex items-center gap-4 bg-white shadow-md rounded-lg p-4 w-80"
-				style={{ backgroundColor: "#f2f2f2" }}
+					className="flex items-center gap-4 bg-white shadow-md rounded-lg p-4 w-80"
+					style={{ backgroundColor: "#f2f2f2" }}
 				>
-					<div className="flex items-center justify-center w-16 h-16 rounded-lg" style={{ backgroundColor: '#ffbe00'}}>
-						<AccountBalanceWalletIcon style={{ color: "white", fontSize: "30px" }} />
+					<div
+						className="flex items-center justify-center w-16 h-16 rounded-lg"
+						style={{ backgroundColor: "#ffbe00" }}
+					>
+						<AccountBalanceWalletIcon
+							style={{ color: "white", fontSize: "30px" }}
+						/>
 					</div>
 
 					<div className="flex flex-col flex-grow">
 						<div className="flex justify-between">
-						<h3 className="font-bold text-lg text-black">Balance</h3>
+							<h3 className="font-bold text-lg text-black">Balance</h3>
 						</div>
-						<p className="text-2xl font-semibold text-black">RM0.00</p>
+						<p className="text-2xl font-semibold text-black">RM163,430.49</p>
 						<div className="flex items-center gap-1 text-sm text-orange-600">
-						{/* <span>+55% last month</span> */}
+							{/* <span>+55% last month</span> */}
 						</div>
 					</div>
 				</div>
@@ -127,10 +137,7 @@ export default function StudentData() {
 			<div className="flex justify-between">
 				<Tablefilter fundType={true} setSelect={(e) => setFund(e)} />
 				<div className="flex justify-end">
-					<button
-						className="btn btn-sm btn-warning"
-						onClick={downloadExcel}
-					>
+					<button className="btn btn-sm btn-warning" onClick={downloadExcel}>
 						<FileDownloadOutlinedIcon />
 						Senarai Nama
 					</button>
@@ -157,17 +164,12 @@ export default function StudentData() {
 								<td>{d.matric_no}</td>
 								<td>
 									{d.coupons
-										.filter(
-											(coupon) => coupon.fund_id === +fund
-										)[0]
+										.filter((coupon) => coupon.fund_id === +fund)[0]
 										?.balance.toFixed(2)}
 								</td>
 								<td></td>
 								<td>
-									<BtnSuspend
-										active={d.user.is_active}
-										userId={d.matric_no}
-									/>
+									<BtnSuspend active={d.user.is_active} userId={d.matric_no} />
 								</td>
 								<td>
 									<Link
