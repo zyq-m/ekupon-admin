@@ -11,9 +11,9 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 
 export default function Dashboard() {
 	const [summary, setSummary] = useState({
-		student: 2475,
+		student: 7641,
 		cafe: 35,
-		coupon: 22309,
+		coupon: 165799,
 	});
 
 	useEffect(() => {

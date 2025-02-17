@@ -87,7 +87,7 @@ export default function Coupon() {
 						<div className="flex justify-between">
 							<h3 className="font-bold text-lg text-black">Total Fund</h3>
 						</div>
-						<p className="text-2xl font-semibold text-black">RM92,678.41</p>
+						<p className="text-2xl font-semibold text-black">RM904,936.00</p>
 						<div className="flex items-center gap-1 text-sm text-orange-600">
 							{/* <span>+55% last month</span> */}
 						</div>
@@ -109,7 +109,7 @@ export default function Coupon() {
 						<div className="flex justify-between">
 							<h3 className="font-bold text-lg text-black">Total Coupon</h3>
 						</div>
-						<p className="text-2xl font-semibold text-black">14</p>
+						<p className="text-2xl font-semibold text-black">21</p>
 						<div className="flex items-center gap-1 text-sm text-orange-600">
 							{/* <span>+55% last month</span> */}
 						</div>
@@ -133,7 +133,7 @@ export default function Coupon() {
 								Total Student Received
 							</h3>
 						</div>
-						<p className="text-2xl font-semibold text-black">2,475</p>
+						<p className="text-2xl font-semibold text-black">7,641</p>
 						<div className="flex items-center gap-1 text-sm text-orange-600">
 							{/* <span>+55% last month</span> */}
 						</div>
