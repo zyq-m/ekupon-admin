@@ -15,6 +15,7 @@ import PaymentsIcon from "@mui/icons-material/Payments";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
+import { suspend } from "../../api/user";
 
 export default function StudentData() {
 	const [student, setStudent] = useState([]);
@@ -39,14 +40,26 @@ export default function StudentData() {
 		}
 	};
 
+	const onSuspend = async (id, active) => {
+		try {
+			await suspend(id, active);
+			fetchStudents();
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	const fetchStudents = () => {
+		api
+			.get("/student", { params: { fundId: fund } })
+			.then((res) => setStudent(res.data))
+			.catch((err) => {
+				showModal(err.response.data.message);
+			});
+	};
+
 	useEffect(() => {
-		fund &&
-			api
-				.get("/student", { params: { fundId: fund } })
-				.then((res) => setStudent(res.data))
-				.catch((err) => {
-					showModal(err.response.data.message);
-				});
+		fund && fetchStudents();
 	}, [fund]);
 
 	if (!student.length && fund) {
@@ -169,7 +182,10 @@ export default function StudentData() {
 								</td>
 								<td></td>
 								<td>
-									<BtnSuspend active={d.user.is_active} userId={d.matric_no} />
+									<BtnSuspend
+										active={d.user.is_active}
+										onClick={() => onSuspend(d.user_id, d.user.is_active)}
+									/>
 								</td>
 								<td>
 									<Link
